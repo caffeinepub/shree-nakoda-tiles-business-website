@@ -1,0 +1,17 @@
+{
+  "frontend/src/App.tsx": "Main application component with page navigation, authentication state management, and theme provider integration without profile setup modal.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including products, company info, business card, PDF document, contact forms, and admin authorization checks with toast notifications.",
+  "frontend/src/components/Header.tsx": "Responsive navigation header without authentication controls, showing only navigation links and conditional admin menu item based on admin status.",
+  "frontend/src/components/Footer.tsx": "Footer component with company information, quick links, social media icons, and caffeine.ai attribution.",
+  "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog for first-time user profile setup requiring name input after Internet Identity login.",
+  "frontend/src/pages/HomePage.tsx": "Landing page with hero section, company branding, features showcase, business card display, and call-to-action sections.",
+  "frontend/src/pages/ProductsPage.tsx": "Product catalog page displaying all tiles and sanitaryware with search functionality and detailed specifications.",
+  "frontend/src/pages/AdminPage.tsx": "Admin dashboard with access control, login/logout functionality exclusive to admin page, statistics cards, and tabbed interface for product management, submissions, business card, and PDF upload.",
+  "frontend/src/pages/ContactPage.tsx": "Contact page with company information display, contact form submission, and map placeholder.",
+  "frontend/src/components/admin/ProductManagement.tsx": "Admin component for viewing, adding, editing, and deleting products with confirmation dialogs.",
+  "frontend/src/components/admin/ProductFormDialog.tsx": "Modal form dialog for creating and editing products with image upload, specifications, and validation.",
+  "frontend/src/components/admin/SubmissionsView.tsx": "Admin view displaying all contact form submissions with customer details and timestamps.",
+  "frontend/src/components/admin/BusinessCardUpload.tsx": "Admin interface for uploading and managing the business card image displayed on the homepage.",
+  "frontend/src/index.css": "Global styles with white and gold OKLCH color system, custom scrollbar styling, and theme tokens for light mode.",
+  "frontend/src/components/admin/PdfUpload.tsx": "Admin component for uploading and managing a single PDF document with file picker restricted to PDFs, upload status display, and direct URL access for opening/downloading the current PDF."
+}

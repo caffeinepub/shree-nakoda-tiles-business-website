@@ -1,0 +1,110 @@
+{
+  "kind": "build_request",
+  "title": "Add admin PDF upload and restrict login UI to admins only",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Add backend support for storing a single uploaded PDF document (e.g., brochure/catalog) and expose APIs to (1) upload/replace the PDF (admin-only) and (2) fetch the currently uploaded PDF (public read).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-20"
+        ],
+        "quotes": [
+          "Add a option for add /upload PDF"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend provides an admin-only update method that accepts a PDF as a blob reference (using the existing Storage.ExternalBlob pattern used for images).",
+        "Backend provides a public query method that returns the currently stored PDF or null when none exists.",
+        "Non-admin callers attempting to upload/replace the PDF receive an Unauthorized error (trap) consistent with existing admin-only endpoints."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add React Query hooks for the new PDF APIs (get current PDF; upload/replace PDF) following existing patterns in frontend/src/hooks/useQueries.ts (toasts on success/error and query invalidation).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-20"
+        ],
+        "quotes": [
+          "Add a option for add /upload PDF"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A query hook returns the current PDF blob (or null) and is disabled until the actor is available (consistent with other hooks).",
+        "A mutation hook uploads/replaces the PDF and invalidates the PDF query on success.",
+        "User-facing toast messages are in English and clearly indicate success or failure."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add an Admin Dashboard UI panel to upload/replace a PDF file (accept only .pdf) and to view the current PDF status, including a download/open link when a PDF is present.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-20"
+        ],
+        "quotes": [
+          "Add a option for add /upload PDF"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin UI provides a file picker restricted to PDF (accept='application/pdf') and an upload action.",
+        "Admin UI shows one of: (a) “No PDF uploaded yet” when none exists, or (b) a working “Open/Download PDF” link when a PDF exists.",
+        "Upload UI is only reachable when the user is an admin (same gating as the rest of the Admin dashboard)."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Update the Admin Dashboard tabs (frontend/src/pages/AdminPage.tsx) to include a new tab (label: \"PDF\") that contains the PDF upload panel.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-20"
+        ],
+        "quotes": [
+          "Add a option for add /upload PDF"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin page includes a new \"PDF\" tab alongside existing tabs.",
+        "Selecting the \"PDF\" tab renders the PDF upload component."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Remove the login option from the public site UI so non-admin users do not see a Login/Logout button outside the Admin area; only show authentication controls on the Admin page.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-20"
+        ],
+        "quotes": [
+          "And remove login option for others rather than Admin"
+        ]
+      },
+      "acceptanceCriteria": [
+        "On Home / Products / Contact pages, the header does not render a Login or Logout button.",
+        "On the Admin page, the UI still allows an admin to log in (and any authenticated user to log out).",
+        "No user-facing authentication text appears outside the Admin page."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor with all logic in backend/main.mo (no additional backend services).",
+    "Do not edit files under frontend/src/components/ui (compose them instead).",
+    "Do not edit immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx."
+  ],
+  "nonGoals": [
+    "Do not add email/password authentication (Internet Identity remains the only authentication method).",
+    "Do not implement multi-PDF library management (this request is for a single uploaded PDF that can be replaced).",
+    "Do not add third-party storage or external databases."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

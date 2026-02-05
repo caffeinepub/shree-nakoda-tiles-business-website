@@ -1,0 +1,80 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Admin PDF upload UI + admin-only authentication controls",
+  "requirements": [
+    {
+      "id": "REQ-2",
+      "summary": "Add React Query hooks for fetching and uploading/replacing the single stored PDF document with toasts and query invalidation.",
+      "acceptanceCriteria": [
+        "A query hook returns the current PDF blob (or null) and is disabled until the actor is available (consistent with other hooks).",
+        "A mutation hook uploads/replaces the PDF and invalidates the PDF query on success.",
+        "User-facing toast messages are in English and clearly indicate success or failure."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add `useGetPdfDocument` (queryKey: ['pdfDocument']) and `useUploadPdfDocument` hooks that call the backend actor’s PDF capabilities, following existing patterns (actor availability gating, toast success/error messages, and invalidating ['pdfDocument'] on successful upload). Use the blob-storage ExternalBlob type for the PDF reference; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add an Admin Dashboard panel to upload/replace a PDF (PDF-only) and show current PDF status with an open/download link when present.",
+      "acceptanceCriteria": [
+        "Admin UI provides a file picker restricted to PDF (accept='application/pdf') and an upload action.",
+        "Admin UI shows one of: (a) “No PDF uploaded yet” when none exists, or (b) a working “Open/Download PDF” link when a PDF exists.",
+        "Upload UI is only reachable when the user is an admin (same gating as the rest of the Admin dashboard)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/admin/PdfUpload.tsx",
+          "operation": "create",
+          "description": "Create an admin-only PDF upload panel component similar to BusinessCardUpload: use the new PDF hooks to (1) load current PDF and render status, (2) accept a single selected file restricted to PDFs, convert to bytes, create an ExternalBlob, and call the upload mutation, and (3) when a PDF exists, render an “Open/Download PDF” link using ExternalBlob.getDirectURL(). Use the blob-storage ExternalBlob capabilities for upload and direct URL access; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/AdminPage.tsx",
+          "operation": "modify",
+          "description": "Import and render the new PdfUpload panel only within the existing admin-gated area (the portion of AdminPage that is shown only when `isAdmin` is true) to ensure the upload UI remains unreachable for non-admin users. Use the existing authorization gating behavior already present on this page; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Add a new \"PDF\" tab to the Admin Dashboard that renders the PDF upload panel.",
+      "acceptanceCriteria": [
+        "Admin page includes a new \"PDF\" tab alongside existing tabs.",
+        "Selecting the \"PDF\" tab renders the PDF upload component."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/AdminPage.tsx",
+          "operation": "modify",
+          "description": "Extend the existing TabsList/TabsContent to include a new tab trigger labeled \"PDF\" and a corresponding TabsContent that renders the PdfUpload component, matching the current AdminPage tab pattern."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Remove login/logout controls from public site UI and show authentication controls only on the Admin page.",
+      "acceptanceCriteria": [
+        "On Home / Products / Contact pages, the header does not render a Login or Logout button.",
+        "On the Admin page, the UI still allows an admin to log in (and any authenticated user to log out).",
+        "No user-facing authentication text appears outside the Admin page."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Header.tsx",
+          "operation": "modify",
+          "description": "Remove the Login/Logout button and related user-facing auth text/controls from the shared header UI so public pages do not display authentication controls. Keep navigation behavior intact (including conditional Admin nav item visibility)."
+        },
+        {
+          "path": "frontend/src/pages/AdminPage.tsx",
+          "operation": "modify",
+          "description": "Add Admin-page-only authentication controls: keep the existing login UI for unauthenticated users, and add a logout action for authenticated users (including non-admins on the Access Denied screen) that clears Internet Identity session and clears the React Query cache (consistent with existing logout behavior previously located in the header). Ensure no auth-related copy is introduced outside AdminPage."
+        }
+      ]
+    }
+  ]
+}

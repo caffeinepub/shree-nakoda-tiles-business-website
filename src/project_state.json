@@ -1,0 +1,256 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "A full-stack Internet Computer (Motoko + React) business website for “Shree Nakoda Tiles” that provides a public storefront (home, product catalog, contact page) and an admin dashboard. The backend canister stores company info (constants), a product catalog with images/specifications/prices, a single “business card” image, and contact form submissions. The frontend uses Internet Identity for authentication, a URL-hash admin token bootstrap to grant the first admin, and TanStack React Query hooks to fetch/mutate backend data with UI toasts and an admin-only management interface.",
+  "existing_features": [
+    {
+      "id": "IF-1",
+      "title": "Internet Identity authentication (login/logout)",
+      "synonyms": [
+        "II auth",
+        "DFINITY AuthClient login"
+      ],
+      "description": "Provides Internet Identity authentication via a React context (InternetIdentityProvider) that initializes AuthClient, loads stored identities, performs login with configurable provider/derivation origin, and supports logout/clear.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-2",
+      "title": "Per-identity backend actor creation and caching",
+      "synonyms": [
+        "actor hook",
+        "useActor"
+      ],
+      "description": "Creates an anonymous actor when not authenticated and an identity-bound actor when authenticated. The actor is cached with React Query keyed by principal, and dependent queries are invalidated/refetched when the actor changes.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-3",
+      "title": "Secure admin token extraction from URL hash with session persistence",
+      "synonyms": [
+        "hash secret param",
+        "caffeineAdminToken handling"
+      ],
+      "description": "Extracts sensitive parameters (e.g., caffeineAdminToken) from the URL hash fragment, stores them in sessionStorage, and removes them from the URL to reduce history/referrer leakage.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-4",
+      "title": "Role-based access control with admin bootstrap and role assignment",
+      "synonyms": [
+        "RBAC",
+        "access control",
+        "admin bootstrap"
+      ],
+      "description": "Implements admin/user/guest roles in Motoko. The first caller who initializes access control with the correct admin token becomes admin; admins can assign roles; queries exist to read caller role and check admin status.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-5",
+      "title": "Admin access gating and onboarding instructions",
+      "synonyms": [
+        "admin panel access denied UX"
+      ],
+      "description": "Admin page requires authentication and admin role; non-admin users see step-by-step instructions explaining how to log out and re-login using a URL hash token to obtain admin access (first-time setup supported).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-6",
+      "title": "Company info API and display",
+      "synonyms": [
+        "business info",
+        "contact info"
+      ],
+      "description": "Backend exposes company name, slogan, phone numbers, and address (constants). Frontend displays this on Home and Contact pages (with defaults/fallbacks).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-7",
+      "title": "Business card image storage and admin upload UI",
+      "synonyms": [
+        "business card management",
+        "single image CMS"
+      ],
+      "description": "Backend stores a single optional business card image blob; public users can fetch it. Admins can upload/replace it via an admin UI with preview/cancel and direct rendering via ExternalBlob.getDirectURL().",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-8",
+      "title": "Product catalog backend (CRUD + images + specifications)",
+      "synonyms": [
+        "product management API",
+        "catalog storage"
+      ],
+      "description": "Backend supports adding, updating, deleting, listing, and fetching products by id. Products include name, description, price, specifications (size/color/material), and an image blob. Admin permissions are required for mutations.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-9",
+      "title": "Product catalog UI with search",
+      "synonyms": [
+        "products page",
+        "catalog browsing"
+      ],
+      "description": "Public Products page lists all products with image, price, and specification details and includes client-side search filtering by name/description; includes skeleton loading state.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-10",
+      "title": "Admin product management UI (add/edit/delete)",
+      "synonyms": [
+        "catalog CMS",
+        "product admin dashboard"
+      ],
+      "description": "Admin dashboard includes product management with a modal form for create/edit (including image upload and spec fields) and deletion confirmation dialogs; data is refreshed via query invalidation.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-11",
+      "title": "Contact form submission and admin submissions viewer",
+      "synonyms": [
+        "lead capture",
+        "inquiries"
+      ],
+      "description": "Public users can submit contact messages (name/email/message) which are stored with timestamps in the backend. Admins can view all submissions in a dedicated admin tab with formatted dates and mailto links.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-12",
+      "title": "Frontend query/mutation layer with toasts",
+      "synonyms": [
+        "React Query hooks",
+        "useQueries"
+      ],
+      "description": "Centralized hooks for all backend operations (company info, products, business card image, contact submissions, admin checks). Mutations trigger success/error toasts and invalidate relevant caches.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-13",
+      "title": "User profile storage APIs (backend)",
+      "synonyms": [
+        "profile management",
+        "userProfiles map"
+      ],
+      "description": "Backend supports saving and retrieving user profiles keyed by principal, including access control (users can save/get own; admins can query others).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-14",
+      "title": "Caffeine blob storage maintenance endpoints",
+      "synonyms": [
+        "storage gateway principals",
+        "dead blob GC",
+        "cashier refill"
+      ],
+      "description": "Includes blob-storage mixin endpoints to sync authorized gateway principals, query blob liveness, list dead blobs (authorized callers), confirm/prune dead blobs and trigger GC, and refill cycles via a designated cashier principal.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-15",
+      "title": "Responsive UI shell with theming",
+      "synonyms": [
+        "header/footer layout",
+        "Tailwind theme"
+      ],
+      "description": "App provides a responsive header (mobile menu, auth controls, admin nav gating), footer, and a Tailwind OKLCH-based theme with next-themes class switching (default light).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "feature-add-react-query-hooks-for-the-new-pdf-apis-get-current-pdf-upload-replace-pdf-following-existing-patterns-in-frontend-src-hooks-usequeries-ts-toasts-on-success-error-and-query-invalidation",
+      "title": "Add React Query hooks for the new PDF APIs (get current PDF; upload/replace PDF) following existing patterns in frontend/src/hooks/useQueries.ts (toasts on success/error and query invalidation).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-admin-dashboard-ui-panel-to-upload-replace-a-pdf-file-accept-only-pdf-and-to-view-the-current-pdf-status-including-a-download-open-link-when-a-pdf-is-present",
+      "title": "Add an Admin Dashboard UI panel to upload/replace a PDF file (accept only .pdf) and to view the current PDF status, including a download/open link when a PDF is present.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-admin-dashboard-tabs-frontend-src-pages-adminpage-tsx-to-include-a-new-tab-label-pdf-that-contains-the-pdf-upload-panel",
+      "title": "Update the Admin Dashboard tabs (frontend/src/pages/AdminPage.tsx) to include a new tab (label: \"PDF\") that contains the PDF upload panel.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-login-option-from-the-public-site-ui-so-non-admin-users-do-not-see-a-login-logout-button-outside-the-admin-area-only-show-authentication-controls-on-the-admin-page",
+      "title": "Remove the login option from the public site UI so non-admin users do not see a Login/Logout button outside the Admin area; only show authentication controls on the Admin page.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Add admin option to upload PDF files (e.g., catalog/brochure) to the site via the admin panel",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Restrict authentication/UI so only admins can log in or access login option; remove/disable login option for non-admin users",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add backend support for storing a single uploaded PDF document (e.g., brochure/catalog) and expose APIs to (1) upload/replace the PDF (admin-only) and (2) fetch the currently uploaded PDF (public read).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    }
+  ],
+  "architectural_notes": [
+    "Internet Computer canister backend written in Motoko; single main actor composes functionality via mixins (authorization + caffeine blob-storage helpers).",
+    "Role-based access control implemented in Motoko (admin/user/guest) with bootstrapping: first non-anonymous principal to initialize with correct admin token becomes admin; others default to user.",
+    "Frontend is React (function components) with TanStack React Query for caching, query invalidation, and mutation workflows.",
+    "Authentication via DFINITY Internet Identity using @dfinity/auth-client; identity state is provided through a React context provider.",
+    "Actor instance is recreated per identity and cached in React Query; on actor change, dependent queries are invalidated/refetched.",
+    "Admin token is supplied via URL hash fragment and persisted in sessionStorage; token is removed from the URL after extraction to reduce leakage.",
+    "UI built with TailwindCSS (custom OKLCH theme tokens), shadcn/ui components, and lucide icons; next-themes used for theme class handling (default light).",
+    "Frontend uses simple state-based page navigation (no router), with a responsive header/footer and admin nav item gated by isAdmin.",
+    "Images are handled via an ExternalBlob abstraction with direct URL rendering (getDirectURL) and bytes conversion from uploaded files.",
+    "Caffeine blob storage primitives are exposed for operations like gateway principal syncing, dead-blob listing/pruning, and cycles top-up via a cashier canister."
+  ],
+  "known_issues": [
+    "Backend state (products, submissions, business card image, user roles/profiles, counters) is not stored in stable variables; upgrades/redeploys will reset data.",
+    "Environment variable name for storage cashier principal appears misspelled: \"CAFFFEINE_STORAGE_CASHIER_PRINCIPAL\" (triple 'F'); likely to cause runtime traps if the intended var differs.",
+    "Authorization initialization depends on CAFFEINE_ADMIN_TOKEN being set; missing env var causes trap on _initializeAccessControlWithSecret.",
+    "AccessControl.getUserRole traps for non-anonymous principals that have not been registered; any backend call path that executes role checks before initialization would fail.",
+    "No pagination/limits for getAllProducts/getAllSubmissions; unbounded growth could impact memory/performance.",
+    "No validation/limits on uploaded image size/type for products or business card image; could risk excessive memory usage.",
+    "Contact form submission endpoint has no spam/rate-limiting/validation beyond required fields on the frontend.",
+    "Admin token is persisted in sessionStorage (readable by JS); reduces URL leakage but still sensitive if XSS occurs.",
+    "Repo appears to include two different global CSS files (frontend/src/index.css and frontend/index.css) with different token sets; potential confusion or misconfiguration if both are referenced.",
+    "Profile setup/user profile UI appears incomplete or not wired (ProfileSetupModal file content is empty in provided listing) despite backend profile APIs existing."
+  ],
+  "isFixRequest": false,
+  "gameProjectType": "none",
+  "projectName": "Shree Nakoda Tiles Business Website",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

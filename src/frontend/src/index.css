@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.625rem;
+        
+        /* White and Gold Theme - Light Mode */
+        --background: 1 0 0;
+        --foreground: 0.2 0 0;
+        
+        --card: 1 0 0;
+        --card-foreground: 0.2 0 0;
+        
+        --popover: 1 0 0;
+        --popover-foreground: 0.2 0 0;
+        
+        /* Primary: Rich Gold */
+        --primary: 0.55 0.15 60;
+        --primary-foreground: 1 0 0;
+        
+        /* Secondary: Light Gold */
+        --secondary: 0.95 0.05 60;
+        --secondary-foreground: 0.3 0 0;
+        
+        /* Muted: Warm Beige */
+        --muted: 0.96 0.02 60;
+        --muted-foreground: 0.5 0.05 60;
+        
+        /* Accent: Amber */
+        --accent: 0.75 0.15 60;
+        --accent-foreground: 1 0 0;
+        
+        --destructive: 0.577 0.245 27.325;
+        --destructive-foreground: 1 0 0;
+        
+        /* Borders: Soft Gold */
+        --border: 0.9 0.03 60;
+        --input: 0.9 0.03 60;
+        --ring: 0.55 0.15 60;
+        
+        --chart-1: 0.646 0.222 41.116;
+        --chart-2: 0.6 0.118 184.704;
+        --chart-3: 0.398 0.07 227.392;
+        --chart-4: 0.828 0.189 84.429;
+        --chart-5: 0.769 0.188 70.08;
+    }
+
+    .dark {
+        /* Dark mode with gold accents */
+        --background: 0.15 0 0;
+        --foreground: 0.95 0 0;
+        
+        --card: 0.2 0 0;
+        --card-foreground: 0.95 0 0;
+        
+        --popover: 0.2 0 0;
+        --popover-foreground: 0.95 0 0;
+        
+        /* Primary: Bright Gold for dark mode */
+        --primary: 0.7 0.18 60;
+        --primary-foreground: 0.15 0 0;
+        
+        --secondary: 0.25 0.05 60;
+        --secondary-foreground: 0.95 0 0;
+        
+        --muted: 0.25 0.02 60;
+        --muted-foreground: 0.65 0.05 60;
+        
+        --accent: 0.6 0.15 60;
+        --accent-foreground: 0.95 0 0;
+        
+        --destructive: 0.704 0.191 22.216;
+        --destructive-foreground: 0.95 0 0;
+        
+        --border: 0.3 0.03 60;
+        --input: 0.3 0.03 60;
+        --ring: 0.7 0.18 60;
+        
+        --chart-1: 0.488 0.243 264.376;
+        --chart-2: 0.696 0.17 162.48;
+        --chart-3: 0.769 0.188 70.08;
+        --chart-4: 0.627 0.265 303.9;
+        --chart-5: 0.645 0.246 16.439;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: oklch(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+    background: oklch(var(--primary) / 0.5);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--primary));
+}

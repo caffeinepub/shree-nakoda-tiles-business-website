@@ -1,0 +1,87 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-add-react-query-hooks-for-the-new-pdf-apis-get-current-pdf-upload-replace-pdf-following-existing-patterns-in-frontend-src-hooks-usequeries-ts-toasts-on-success-error-and-query-invalidation",
+      "featureTitle": "Add React Query hooks for the new PDF APIs (get current PDF; upload/replace PDF) following existing patterns in frontend/src/hooks/useQueries.ts (toasts on success/error and query invalidation).",
+      "files": [
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-an-admin-dashboard-ui-panel-to-upload-replace-a-pdf-file-accept-only-pdf-and-to-view-the-current-pdf-status-including-a-download-open-link-when-a-pdf-is-present",
+      "featureTitle": "Add an Admin Dashboard UI panel to upload/replace a PDF file (accept only .pdf) and to view the current PDF status, including a download/open link when a PDF is present.",
+      "files": [
+        "frontend/src/components/admin/PdfUpload.tsx",
+        "frontend/src/pages/AdminPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-admin-dashboard-tabs-frontend-src-pages-adminpage-tsx-to-include-a-new-tab-label-pdf-that-contains-the-pdf-upload-panel",
+      "featureTitle": "Update the Admin Dashboard tabs (frontend/src/pages/AdminPage.tsx) to include a new tab (label: \"PDF\") that contains the PDF upload panel.",
+      "files": [
+        "frontend/src/pages/AdminPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-remove-the-login-option-from-the-public-site-ui-so-non-admin-users-do-not-see-a-login-logout-button-outside-the-admin-area-only-show-authentication-controls-on-the-admin-page",
+      "featureTitle": "Remove the login option from the public site UI so non-admin users do not see a Login/Logout button outside the Admin area; only show authentication controls on the Admin page.",
+      "files": [
+        "frontend/src/components/Header.tsx",
+        "frontend/src/pages/AdminPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
